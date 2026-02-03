@@ -1,19 +1,19 @@
 .PHONY:all clean target llhttp.a llhttp.so
 
 objs     := src/api.o src/http.o src/llhttp.o
-targets  := llhttp.a llhttp.so demo1.run
+targets  := libllhttp.a libllhttp.so demo1.run
 
 all:$(targets)
 
 
-llhttp.a:$(objs)
+libllhttp.a:$(objs)
 	ar rcs -o $@ $^
 
-llhttp.so:$(objs)
+libllhttp.so:$(objs)
 	$(CC) -fPIC -shared -o $@ $^
 
-demo1.run:example/demo1.c llhttp.a
-	$(CC) -fPIC -o $@ $^
+demo1.run:example/demo1.c libllhttp.a
+	$(CC) -fPIC -Isrc/ -o $@ $^
 
 
 %.o:%.c
